@@ -94,8 +94,19 @@ body, html{
 /****** Header ******/
 .header{
     width: 100%;
-    height: 300px;
+    height: auto;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.header .text{
+    height: auto;
+    width: 100%;
+    padding: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -103,7 +114,7 @@ body, html{
     background-color: #3742fa;
 }
 
-.header h1{
+.header .text h1{
     margin: 0;
     padding: 30px;
     color: #ffffff;
@@ -111,7 +122,7 @@ body, html{
     font-size: 2.5rem;
 }
 
-.header p{
+.header .text p{
     margin: 0;
     padding: 30px;
     color: #ffffff;
@@ -121,17 +132,17 @@ body, html{
 
 .header--wave{
     display: block;
-    position: absolute;
     width: 100%;
-    height: 300px;
+    height: auto;
     top: 250px;
+    z-index: 0;
 }
 
 
 /****** Market ******/
 .market{
     width: 100%;
-    margin-top: 300px;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
