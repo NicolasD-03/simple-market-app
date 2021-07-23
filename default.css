@@ -10,10 +10,13 @@
 }
 
 body, html{
+    height: 100vh;
     margin: 0;
     padding: 0;
     background-color: #130f40;
     color: #bdb2b2;
+    overflow: auto;
+    scroll-behavior: smooth;
 }
 
 .bold{
@@ -21,6 +24,26 @@ body, html{
     font-weight: bold;
     font-size: inherit;
 }
+
+
+/****** Navbar ******/
+ /* ::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+   ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #bdb2b2;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
+  }  */
 
 /****** Navbar ******/
 .nav{
@@ -59,7 +82,7 @@ body, html{
 
 .nav-menu_item:hover a {
     color: #ffffff;
-    transition: all .2s ease;
+    transition: all .3s ease-out;
 }
 
 .nav-menu_item a {
@@ -83,6 +106,7 @@ body, html{
 
 .nav-menu_item--image:hover svg{
     color: #ffffff;
+    transition: all .3s ease-out;
 }
 
 .nav-menu_item--image svg {
@@ -100,10 +124,11 @@ body, html{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center;
     
 }
 
-.header .text{
+.header--text{
     height: auto;
     width: 100%;
     padding: 100px;
@@ -114,7 +139,7 @@ body, html{
     background-color: #3742fa;
 }
 
-.header .text h1{
+.header--text h1{
     margin: 0;
     padding: 30px;
     color: #ffffff;
@@ -122,7 +147,7 @@ body, html{
     font-size: 2.5rem;
 }
 
-.header .text p{
+.header--text p{
     margin: 0;
     padding: 30px;
     color: #ffffff;
@@ -198,7 +223,7 @@ body, html{
     flex-direction: column;
 }
 
-.info__title{
+.market-item__info .info__title{
     width: 300px;
     padding-top: 20px;
     font-size: 1.5rem;
@@ -209,26 +234,26 @@ body, html{
     overflow: hidden;
 }
 
-.info__wheight-price{
+.market-item__info .info__wheight-price{
     font-size: 1rem;
-    font-weight: lighter;
+    font-weight: 300;
     text-decoration: underline;
 }
 
-.info__add{
+.market-item__info .info__add{
     margin-top: 20px;
     padding: 0.5rem 3rem;
     background-color: #4834d4;
     border-radius: 30px;
 }
 
-.info__add:hover{
+.market-item__info .info__add:hover{
     cursor: pointer;
     background-color: #715fe6;
-    transition: all .2s ease-out;
+    transition: background-color .3s ease-out;
 }
 
-.market-item__price{
+ .market-item__price{
     width: 130px;
     font-size: 1.4rem;
     text-overflow: ellipsis;
@@ -237,8 +262,8 @@ body, html{
     overflow: hidden;
 }
 
-/****** Footer ******/
 
+/****** Footer ******/
 .footer{
     width: 100%;
     display: flex;
@@ -298,4 +323,251 @@ body, html{
     height: 100%;
     color: #ffffff;
     transition: all .2s ease;
+}
+
+
+/****** Cart modal ******/
+.market-modal{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    background-color: rgba(0,0,0, 0.8);
+}
+
+.market-modal__content{
+    height: 100%;
+    width: 800px;
+    margin: 100px 0;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    text-align: center;
+    flex-direction: column;
+}
+
+.market-modal__content .title{
+    padding: 50px;
+}
+
+.market-modal__content .title h3{
+    color: #ffffff;
+    font-size: 2rem;
+}
+
+.market-modal__content .close{
+    height: 3rem;
+    width: 3rem;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+}
+
+.market-modal__content .close:hover {
+    cursor: pointer;
+    color: #ffffff;
+    transition: color .3s ease-out;
+}
+
+
+/****** Cart Items ******/
+.market-content-items{
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #ffffff;
+}
+
+.cart-item{
+    width: 620px;
+    height: auto;
+    padding: 10px 40px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    background-color: #e74c3c;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.cart-item__image{
+    height: 8rem;
+    width: 8rem;
+}
+
+.cart-item__image img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.cart-item__info{
+    height: 100%;
+    width: auto;
+    margin: 0 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.cart-item__info .info__title{
+    width: 300px;
+    padding-top: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.cart-item__info .info__control{
+    height: auto;
+    width: 300px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
+.cart-item__info .info__control .info__button{
+    padding: 0.5rem 2rem;
+    background-color: #4834d4;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.cart-item__info .info__control .info__button:hover{
+    cursor: pointer;
+    background-color: #715fe6;
+    transition: background-color .3s ease-out;
+}
+
+.cart-item__info .info__control .info__number{
+    width: 100%;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.cart-item__price{
+    width: 130px;
+    font-size: 1.4rem;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+/****** Admin Modal ******/
+.admin-modal{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 11;
+    background-color: rgba(0,0,0, 0.8);
+}
+
+.admin-modal__content{
+    height: 100%;
+    width: 800px;
+    margin: 100px 0;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    text-align: center;
+    flex-direction: column;
+}
+
+.admin-modal__content .title{
+    padding: 50px;
+}
+
+.admin-modal__content .title h3{
+    color: #ffffff;
+    font-size: 2rem;
+}
+
+.admin-modal__content .close{
+    height: 3rem;
+    width: 3rem;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+}
+
+.admin-modal__content .close:hover {
+    cursor: pointer;
+    color: #ffffff;
+    transition: color .3s ease-out;
+}
+
+
+/****** Admin Form ******/
+.admin-form form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.admin-form label {
+    margin-top: 10px;
+    padding: 10px;
+    color: #ffffff;
+}
+
+.admin-form input[type="text"]{
+    width: 300px;
+    padding: .5rem .8rem;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+}
+
+.admin-form input[type="submit"]{
+    margin-top: 20px;
+    padding: 0.5rem 2rem;
+    color: #ffffff;
+    outline: none;
+    border: none;
+    background-color: #4834d4;
+    border-radius: 20px;
+}
+
+.admin-form input[type="submit"]:hover{
+    background-color: #715fe6;
+    cursor: pointer;
 }
