@@ -1,0 +1,19 @@
+{
+  "name": "market-app",
+  "version": "1.0.0",
+  "description": "A simple market web app ",
+  "main": "./src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicolasD-03/simple-market-app.git"
+  },
+  "author": "Nicolas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NicolasD-03/simple-market-app/issues"
+  },
+  "homepage": "https://github.com/NicolasD-03/simple-market-app#readme"
+}
