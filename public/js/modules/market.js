@@ -10,7 +10,7 @@ const createItemMarket = (cartList, title, priceWheight, price) => {
     marketBlockImage.classList.add("market-item__image");
 
     const marketImage = document.createElement("img");
-    marketImage.setAttribute("src",  "http://127.0.0.1:5500/public/assets/img/Apple-min.png");
+    marketImage.setAttribute("src",  "http://localhost:8080/assets/img/Apple-min.png");
     marketImage.setAttribute("alt", "Prout");
 
     marketBlockImage.appendChild(marketImage);
@@ -48,7 +48,7 @@ const createItemMarket = (cartList, title, priceWheight, price) => {
     marketItem.appendChild(marketItemPrice);
     
     marketAdd.addEventListener('click', (e) =>{
-        addToCart(cartList, title, "http://127.0.0.1:5500/public/assets/img/Chocolate-min.png", price)
+        addToCart(cartList, title, "http://localhost:8080/assets/img/Chocolate-min.png", price)
     });
 
     return marketItem

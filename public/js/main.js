@@ -23,13 +23,13 @@ const cart = document.querySelector(".market-content-items");
 let cartList = [
     {
         "title": "Banana",
-        "img": "http://127.0.0.1:5500/public/assets/img/Banana-min.png",
+        "img": "http://localhost:8080/assets/img/Banana-min.png",
         "price": 5,
         "number": 10
     },
     {
         "title": "Apple",
-        "img": "http://127.0.0.1:5500/public/assets/img/Apple-min.png",
+        "img": "http://localhost:8080/assets/img/Apple-min.png",
         "price": 2,
         "number": 50
     }
