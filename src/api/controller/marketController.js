@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Market } = require(`${ process.cwd() }/src/models/marketModels.js`);
+const { Market } = require('../../models/marketModels.js');
 
 module.exports = {
     createItem: async (name, img, price, wheightPrice) => {
@@ -14,31 +14,36 @@ module.exports = {
             const newItemEntry = await item.save();
             return newItemEntry;
         }catch (error){
-            throw error;
+            return error;
         }
         
     },
     getAllItems: async () => {
-        try{
-            const result = await Market.find({}, (err, items) => { items })
-            return result;
-        }catch(error){
-            throw error;
-        }
+        const result =  await Market.find({}, (err, items) => {
+             if(err){ return err }; 
+             return items;
+        });
+        return result;
     },
-    getItem: async (name) => {
-        try{
-            const result = await Market.findOne({name: name}, (err, item) => { item });
-            return result;
-        }catch(error){
-            throw error;
-        }
+    getItem: async (id) => {
+        const result = await Market.findById(id, (err, item) => { 
+            if(err){ return err };
+            return item; 
+        });
+        return result;
     },
-    deleteitem: async (name) => {
-        try{
-            const result = await Market.findOneAndDelete({name: name});
-        }catch(error){ 
-            throw error;
-        }
+    deleteItem: async (id) => {
+        const result = await Market.findByIdAndDelete(id, (err, item) => {
+            if(err){ return err};
+            return item;
+        });
+        return result;
+    },
+    updateItem: async (id, body) => {
+        const result = await Market.findByIdAndUpdate(id, body, (err, item) => {
+            if(err){ return err};
+            return item;
+        });
+        return result;
     }
-}
+};

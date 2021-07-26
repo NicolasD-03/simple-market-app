@@ -5,15 +5,25 @@ const ObjectId = Schema.Types.ObjectId;
 
 const marketShema = new Schema ({
     _id: ObjectId,
-    name: {type: String, required: true},
-    img: String,
-    price: Number,
-    wheightPrice: Number
+    name: {
+        type: String, 
+        required: true
+    },
+    img: {
+        type: String, 
+        required: true
+    },
+    price: {
+        type: Number, 
+        required: true
+    },
+    wheightPrice: {
+        type: Number, 
+        required: true
+    }
 },{
     versionKey: false
 });
-
-marketShema.index({name: 1})
 
 const Market = mongoose.model('Market', marketShema);
 
