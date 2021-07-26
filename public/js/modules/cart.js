@@ -1,3 +1,5 @@
+const cart = document.querySelector(".market-content-items");
+
 const addToCart = (carList, titleItem, img, price) => {
 
     const item = carList.find(x => x.title === titleItem);
