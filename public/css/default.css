@@ -183,8 +183,7 @@ body, html{
 
 .market p {
     margin: 20px 0 50px 0;
-    font-weight: lighter+
-    ;
+    font-weight: lighter;
     font-size: 1.4rem;
 }
 
@@ -193,6 +192,7 @@ body, html{
     height: auto;
     padding: 10px 40px;
     margin-bottom: 50px;
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -262,6 +262,23 @@ body, html{
     overflow: hidden;
 }
 
+.market-item__remove{
+    height: 2rem;
+    width: 2rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.market-item__remove:hover{
+    cursor: pointer;
+    text-shadow: 3px 3px 1px #222121;
+    transition: text-shadow .2s ease-out;
+}
 
 /****** Footer ******/
 .footer{
@@ -570,4 +587,38 @@ body, html{
 .admin-form input[type="submit"]:hover{
     background-color: #715fe6;
     cursor: pointer;
+}
+
+.info-modal{
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+    width: 400px;
+    max-height: 150px;
+    min-height: 100px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #f39c12;
+    color: #ffffff;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.info-type{
+    width: 100%;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.info-message{
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    font-size: 1.1rem;
+    font-weight: 300;
+    word-break: break-all;
+    overflow: hidden;
+    line-height: 1.2rem;
 }
