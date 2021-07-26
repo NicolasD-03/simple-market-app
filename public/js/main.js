@@ -1,24 +1,19 @@
 // Import
 import { showModal, hideModal } from "./modules/modal.js";
 import { createItemCart, clearCart } from "./modules/cart.js";
-import { showItemMarket } from "./modules/market.js";
+import { getItemsMarket, postItemMarket, showItemMarket } from "./modules/market.js";
 
 // Market modal
 const marketModal = document.querySelector("#marketModal");
 const closeMarketModal = document.querySelector("#marketModalClose");
 const cartButton = document.querySelector("#cartButton");
 // Admin Modal
-const adminModal = document.querySelector("#adminModal");
 const closeAdminModal = document.querySelector("#adminModalClose");
 const adminButton = document.querySelector("#adminButton");
-// Admin form
-const formAdmin = document.querySelector(".admin-form form");
-const titleInput = document.querySelector("#itemTitle");
-const priceInput = document.querySelector("#itemPrice");
-const priceWheightInput = document.querySelector("#itemPriceWheight");
-// General
-const market = document.querySelector("#market");
-const cart = document.querySelector(".market-content-items");
+
+const adminPost = document.querySelector(".admin-form form");
+
+const marketItems = await getItemsMarket();
 
 let cartList = [
     {
@@ -53,14 +48,22 @@ closeAdminModal.addEventListener('click', () =>{
     hideModal(adminModal);
 });
 
-formAdmin.addEventListener('submit', (e) =>{
+adminPost.addEventListener('submit', (e) =>{
     e.preventDefault();
-    showItemMarket(market, cartList, titleInput.value, priceWheightInput.value, priceInput.value);
+    const { itemTitle,  itemPrice, itemPriceWheight} = e.target.elements;
+    postItemMarket(itemTitle.value, "test", itemPrice.value, itemPriceWheight.value);
     hideModal(adminModal);
-    titleInput.value = ""; 
-    priceWheightInput.value = ""; 
-    priceInput.value = ""; 
+    itemTitle.value = ''; 
+    itemPrice.value = ''; 
+    itemPriceWheight.value = ''; 
 });
+
+
+
+marketItems.forEach(element => {
+    showItemMarket(element);
+});
+
 
 
 
