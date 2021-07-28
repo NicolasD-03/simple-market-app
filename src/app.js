@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const cart  = require('./api/routes/cart.js');
+const user  = require('./api/routes/user.js');
 const market = require('./api/routes/market.js');
 const config = require('./config/index.js');
 const db = require('./config/init.js');
@@ -15,7 +15,7 @@ app.use(morgan('tiny'));
 app.use(express.static('public'));
 app.use(express.json());
 
-app.use((`${ apiAdress }cart`), cart);
+app.use((`${ apiAdress }users`), user);
 app.use((`${ apiAdress }market`), market);
 
 
