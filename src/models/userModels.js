@@ -20,8 +20,11 @@ const usersShema = new Schema ({
     },
     isAdmin: {
         type: Boolean,
-        default: false,
-        required: true
+        default: false
+    },
+    isEmailVerify:{
+        type: Boolean,
+        default: false
     },
     apiKey: {
         type: String,
@@ -32,6 +35,10 @@ const usersShema = new Schema ({
     },
     emailKey: {
         type: String
+    },
+    cart: {
+        type: Array,
+        default: []
     }
 },{
     versionKey: false

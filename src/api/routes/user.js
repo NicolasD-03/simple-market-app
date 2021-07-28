@@ -10,24 +10,32 @@ router.post('/login', async (req, res) => {
     await userController.loginUser(req, res);
 });
 
-router.get('/:emailKey', (req, res) => {
-
+router.get('/email/:emailToken', async (req, res) => {
+    await userController.verifyEmail(req, res);
 });
 
-router.get('/cart', (req, res) => {
+// router.get('/detail', async (req, res) => {
+//     await userController.getUserDetail(req, res);
+// });
 
+router.patch('/:userId', async (req, res) => {
+    await userController.updateUser(req, res);
 });
 
-router.post('/cart', (req, res) => {
-    res.end('test');res.end('test');
+router.get('/:userId/cart', async (req, res) => {
+    await userController.getItemCart(req, res);
 });
 
-router.delete('/cart', (req, res) => {
-    res.end('test');
+router.post('/:userId/cart', async (req, res) => {
+    await userController.createItemCart(req, res);
 });
 
-router.patch('/cart', (req, res) => {
-    res.end('test');
+router.delete('/:userId/cart/:itemId', async (req, res) => {
+    await userController.deleteItemCart(req, res);
+});
+
+router.patch('/:userId/cart/:itemId', async (req, res) => {
+    await userController.updateItemCart(req, res);
 });
 
 
