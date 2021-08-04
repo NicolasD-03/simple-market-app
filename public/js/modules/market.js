@@ -1,6 +1,13 @@
+import { addToCart } from "./cart.js";
+import { verifyToken, decodeToken } from "./token.js"
+
 const market = document.querySelector("#market");
 
-import { addToCart } from "./cart.js";
+const getToken =  async () => {
+    return await verifyToken();
+    
+};
+
 
 const getItemsMarket = async () => {
     const response = await fetch("/api/v1/market/items");
@@ -11,16 +18,19 @@ const getItemsMarket = async () => {
 const postItemMarket = async (name, img, price, wheightPrice) => {
     const response = await fetch("/api/v1/market/items", {
         method: 'POST',
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json", "token": await getToken() },
         body: JSON.stringify({name: name, img: img, price: price, wheightPrice: wheightPrice})
     });
     const result = await response.json();
-    showItemMarket(result);
+    if(!result.type){
+        showItemMarket(result);
+    }
 }
 
 const deleteItemMarket = async (id, item) => {
     const response = await fetch(`/api/v1/market/items/${ id }`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: { "token": await getToken() }
     });
     const result = await response.json();
     if(!result){
@@ -29,7 +39,7 @@ const deleteItemMarket = async (id, item) => {
     
 }
 
-const createItemMarket = (jsonMarket) => {
+const createItemMarket =  (jsonMarket) => {
 
     const marketItem = document.createElement("div");
     marketItem.classList.add("market-item");
@@ -83,9 +93,9 @@ const createItemMarket = (jsonMarket) => {
     marketItem.appendChild(marketItemPrice);
     marketItem.appendChild(marketItemRemove);
     
-    // marketAdd.addEventListener('click', (e) =>{
-    //     addToCart(cartList, title, "http://localhost:8080/assets/img/Chocolate-min.png", price)
-    // });
+    marketAdd.addEventListener('click', async (e) =>{
+        addToCart(jsonMarket._id);
+    });
 
     marketItemRemove.addEventListener('click', () => {
         const itemId = marketItem.getAttribute("item-id");
@@ -97,9 +107,10 @@ const createItemMarket = (jsonMarket) => {
 };
 
 const showItemMarket = (jsonMarket) => {
-    const itemMarket = createItemMarket(jsonMarket);
-    market.appendChild(itemMarket);
-    
+    if(market){
+        const itemMarket = createItemMarket(jsonMarket);
+        market.appendChild(itemMarket);
+    };
 };
 
 export { getItemsMarket, postItemMarket, showItemMarket }
