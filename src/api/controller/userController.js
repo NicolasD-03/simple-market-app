@@ -5,20 +5,19 @@ const verifyLengthId = require('../../services/verifyLengthId.js');
 const { createToken, verifyToken } = require('../../services/jwt.js')
 const Users = require('../../models/userModels.js');
 const { verifyRegisterInput, verifyLoginInput } = require('../../services/verifyInput.js');
-const { token } = require('morgan');
 
 module.exports = {
     registerUser: async (req, res) => {
         try{
-            const { username, password, email } = req.body;
-            const inputVerification = verifyRegisterInput(username, password, email);
+            const { username, password, passwordConfirm, email } = req.body;
+            const inputVerification = verifyRegisterInput(username, password, passwordConfirm, email);
             if(inputVerification){ 
-                return res.status(inputVerification.status).send(inputVerification.message);
+                return res.status(inputVerification.status).json({ type: "error", message: inputVerification.message});
             }
 
-            const oldUser = await Users.findOne({ email });
+            const oldUser = await Users.findOne({ email: email.toLowerCase() });
             if(oldUser){
-                return res.status(409).send("User already exist, please login");
+                return res.status(409).json({type: "error", message: "User does already exist, please go to login"});
             }
 
             const user = await Users.create({
@@ -33,8 +32,7 @@ module.exports = {
             user.jwtKey =  token
             await user.save();
 
-            res.cookie("token", token, {maxAges:1000*60*30, secure: true, httpOnly: true});
-            return res.status(201).json(user);
+            return res.status(201).json({type: "success", message: "Register successful, you can now login"});
         }catch(error){
             console.log(error);
         }
@@ -42,23 +40,24 @@ module.exports = {
     loginUser: async (req, res) => {
         try{
             const { email, password } = req.body;
-            const loginVerification = verifyLoginInput(email, password);
-            if(loginVerification){
-                return res.status(loginVerification.status).send(loginVerification.message);
+            const inputVerification = verifyLoginInput(email, password);
+            if(inputVerification){
+                return res.status(inputVerification.status).json({ type: "error", message: inputVerification.message});
             }
 
-            const user = await Users.findOne({ email });
-
-            if(user && comparePassword(password, user.password)){
-                const token = createToken(user._id, user.username, user.email, user.isAdmin, user.apiKey, user.isEmailVerify);
-                user.jwtKey = token;
-                await user.save();
-                res.cookie("token", token, {maxAges:1000*60*30, secure: true, httpOnly: true});
-                return res.status(200).json(user);
+            const user = await Users.findOne({ email: email.toLowerCase() });
+            if(!user){
+                return res.status(404).json({type: "error", message: "User doesn't exist"});
             }
-
-            return res.status(400).send("Invalid email or password")
-
+            const passwordResult = await comparePassword(password, user.password);
+            if(!passwordResult){
+                return res.status(403).json({type: "error", "message": "Invalid password"});
+            }
+            const token = createToken(user._id, user.username, user.email, user.isAdmin, user.apiKey, user.isEmailVerify);
+            user.jwtKey = token;
+            await user.save();
+            res.cookie("token", token, {expires: new Date(Date.now() + 21600000), httpOnly: false});
+            return res.status(200).json({type: "success", "message": "Login successful"});
         }catch(error){
             console.log(error);
         }
@@ -78,17 +77,21 @@ module.exports = {
         const token = createToken(user._id, user.username, user.email, user.isAdmin, user.apiKey, user.isEmailVerify);
         user.jwtKey = token;
         await user.save();
-        res.cookie("token", token, {maxAges:1000*60*30, secure: true, httpOnly: true});
+        res.cookie("token", token, {expires: new Date(Date.now() + 21600000), httpOnly: false});
 
         return res.status(200).send("Your accout is verify. Welcome!");
     },
-    getUserDetail: async (req, res) => {
+    verifyToken: async (req, res) => {
         const token = req.get('token');
         const jwtVerification = verifyToken(token);
         if(jwtVerification.status === 400){
-            return res.status(jwtVerification.status).send(jwtVerification.message);
+            return res.status(jwtVerification.status).json({ type: "error", message: jwtVerification.message });
         };
-        return res.status(jwtVerification.status).json(jwtVerification.data);
+        const user = await Users.findById(jwtVerification.data.user_id);
+        if(!user){
+            return res.status(404).json({ type: "error", message: "User with this token didn't exist" });
+        }
+        return res.status(200).json({ type: "success" });
     },
     updateUser: async (req, res) => {
         const { userId } = req.params;
@@ -152,6 +155,9 @@ module.exports = {
         if(verifyLengthId(userId)){
             return res.status(400).send("Id is not correct");
         };
+        if(!body.quantity || typeof(body.quantity) !== "number"){
+            return res.status(400).send("Request is not valid");
+        }
         if(!token){
             return res.status(401).send("Token is required");
         };
@@ -169,6 +175,8 @@ module.exports = {
         if(user.jwtKey !== token){
             return res.status(401).send("Token is not valid");
         };
+
+        
 
         user.cart.push(body);
         await user.save();
@@ -204,7 +212,7 @@ module.exports = {
         if(indexCartItem === -1){
             return res.status(404).send("Item not found");
         };
-        user.cart.splice(indexCartItem, indexCartItem);
+        user.cart.splice(indexCartItem, 1);
         await user.save();
         return res.status(200).json(user.cart);
     },
@@ -212,7 +220,7 @@ module.exports = {
         const { userId, itemId } = req.params;
         const body = req.body;
         const token = req.get('token');
-        if(verifyLengthId(userId)){
+        if(verifyLengthId(userId) && verifyLengthId(itemId)){
             return res.status(400).send("Id is not correct");
         };
         if(!token){
@@ -232,7 +240,7 @@ module.exports = {
         if(user.jwtKey !== token){
             return res.status(401).send("Token is not valid");
         };
-        if(!body.number || typeof(body.number) !== "number"){
+        if(!body.quantity || typeof(body.quantity) !== "number"){
             return res.status(400).send("Request is not valid");
         }
 
@@ -241,7 +249,7 @@ module.exports = {
             return res.status(404).send("Item not found");
         };
 
-        const updatedCartItem = {...user.cart[cartIdItem], number: body.number};
+        const updatedCartItem = {...user.cart[cartIdItem], quantity: body.quantity};
         user.cart[cartIdItem] = updatedCartItem
         const newCart = user.cart;
         user.cart = newCart;

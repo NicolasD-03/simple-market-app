@@ -14,9 +14,9 @@ router.get('/email/:emailToken', async (req, res) => {
     await userController.verifyEmail(req, res);
 });
 
-// router.get('/detail', async (req, res) => {
-//     await userController.getUserDetail(req, res);
-// });
+router.get('/verify/token', async (req, res) => {
+    await userController.verifyToken(req, res);
+});
 
 router.patch('/:userId', async (req, res) => {
     await userController.updateUser(req, res);
@@ -37,6 +37,7 @@ router.delete('/:userId/cart/:itemId', async (req, res) => {
 router.patch('/:userId/cart/:itemId', async (req, res) => {
     await userController.updateItemCart(req, res);
 });
+
 
 
 module.exports = router
