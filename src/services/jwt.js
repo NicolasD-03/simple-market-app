@@ -13,7 +13,7 @@ const createToken = (userId, userUsername, userEmail, userAdmin, userApiKey, use
          },
          jwtKey,
          {
-             expiresIn: "30m"
+             expiresIn: "6h"
          }
     );
     return token;
@@ -31,4 +31,8 @@ const verifyToken = (token) => {
         
 };
 
-module.exports = { createToken, verifyToken };
+const decodeToken = (token) => {
+    return jwt.decode(token);
+};
+
+module.exports = { createToken, verifyToken, decodeToken };
