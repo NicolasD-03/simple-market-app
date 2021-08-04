@@ -48,6 +48,7 @@ body, html{
 /****** Navbar ******/
 .nav{
     width: 100%;
+    min-height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -72,6 +73,10 @@ body, html{
     align-items: center;
 }
 
+.nav-menu:last-child{
+    margin-right: 30px;
+}
+
 .nav-menu_item{
     padding: 10px;
 }
@@ -94,7 +99,6 @@ body, html{
 
 .nav-menu_item--image{
     padding: 10px;
-    margin-right: 30px;
     height: 3.7rem;
     width: 3.7rem;
 
@@ -589,36 +593,83 @@ body, html{
     cursor: pointer;
 }
 
-.info-modal{
-    position: absolute;
-    right: 2rem;
-    bottom: 2rem;
-    width: 400px;
-    max-height: 150px;
-    min-height: 100px;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: #f39c12;
+.infoMessage{
     color: #ffffff;
-    border-radius: 20px;
-    text-align: center;
-}
-
-.info-type{
-    width: 100%;
-    font-size: 1.3rem;
+    padding: 20px;
+    border-radius: 5px;
     font-weight: bold;
 }
 
-.info-message{
-    padding: 10px;
+.success{
+    background-color: #b69d11;
+}
+
+.error{
+    background-color: #e74c3c;
+}
+
+
+/****** User Form ******/
+
+.user-form{
     width: 100%;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.user-form-item{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.user-form-item > label{
+    color: #ffffff;
+    padding: 10px;
     font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.redirect {
+    font-size: .8rem;
     font-weight: 300;
-    word-break: break-all;
-    overflow: hidden;
-    line-height: 1.2rem;
+}
+
+.redirect > a {
+    color: inherit;
+    font-size: inherit;
+}
+
+.redirect > a:hover {
+    color: #ffffff;
+}
+
+.user-form-item > input:not([type="submit"]){
+    height: 2rem;
+    width: 250px;
+    outline: none;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+.user-form-item > input[type="submit"]{
+    padding: 0.6rem 1.5rem;
+    color: #ffffff;
+    font-size: 1.2rem;
+    background-color: #4834d4;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+}
+
+.user-form-item > input[type="submit"]:hover{
+    background-color: #715fe6;
+    cursor: pointer;
 }
