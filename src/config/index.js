@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config({ path: "/local.env" });
 
 const hostname = process.env.HOST;
 const port = process.env.SERVER_PORT;
@@ -12,4 +12,13 @@ const dbName = process.env.DB_NAME;
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
 
-module.exports = {hostname, port, apiAdress, apiKey, jwtKey, dbHost, dbPort, dbName}
+module.exports = {
+  hostname,
+  port,
+  apiAdress,
+  apiKey,
+  jwtKey,
+  dbHost,
+  dbPort,
+  dbName,
+};
